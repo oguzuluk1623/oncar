@@ -23,7 +23,7 @@ st.markdown(
         transform: translate(-50%, -50%);
         font-size: 7vw;
         font-weight: bold;
-        color: rgba(150, 150, 150, 0.07); /* Çok silik ve şık durması için şeffaflık */
+        color: rgba(150, 150, 150, 0.07);
         z-index: 0;
         pointer-events: none;
         white-space: nowrap;
@@ -193,7 +193,8 @@ with sekmeler[1]:
                     )
                     sayac += 1
 
-                with open(dosya_yolu, "wb5") as f:
+                # DÜZELTİLEN KISIM (wb5 yerine wb yapıldı)
+                with open(dosya_yolu, "wb") as f:
                     f.write(pdf_dosya.getbuffer())
 
                 conn = veritabani_baglantisi()
