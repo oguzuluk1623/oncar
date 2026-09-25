@@ -5,9 +5,32 @@ import streamlit as st
 
 # Sayfa Yapılandırması
 st.set_page_config(
-    page_title="Plaka ve Sigorta Takip Sistemi",
+    page_title="E.B. Sigorta - Araç Takip Sistemi",
     page_icon="🚗",
     layout="centered",
+)
+
+# --- ÖZEL TASARIM VE ARKA PLAN FİLİGRANI (CSS) ---
+st.markdown(
+    """
+    <style>
+    /* Arka plana silik E.B. SİGORTA yazısı ekleme */
+    .stApp::before {
+        content: "E.B. SİGORTA";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 7vw;
+        font-weight: bold;
+        color: rgba(150, 150, 150, 0.07); /* Çok silik ve şık durması için şeffaflık */
+        z-index: 0;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 # --- GÜVENLİ GİRİŞ KONTROLÜ ---
@@ -23,7 +46,7 @@ if "giris_yapildi" not in st.session_state:
 
 
 def giris_ekrani():
-    st.title("🔐 Araç Sigorta Takip - Giriş Ekranı")
+    st.title("🔐 E.B. Sigorta - Giriş Ekranı")
     st.write("Lütfen devam etmek için kullanıcı adı ve şifrenizi girin.")
 
     with st.form("giris_formu"):
@@ -83,7 +106,7 @@ def tablo_olustur():
 
 tablo_olustur()
 
-st.title("🚗 Araç Sigorta Takip Programı")
+st.title("🛡️ E.B. Sigorta - Araç Takip Sistemi")
 
 # Sekmeler oluşturma
 sekmeler = st.tabs(["📋 Kayıtlı Araçlar ve Listeleme", "➕ Yeni Poliçe Ekle"])
@@ -99,7 +122,6 @@ with sekmeler[0]:
 
     conn = veritabani_baglantisi()
     if arama_metni:
-        # Eğer arama kutusuna bir şey yazıldıysa veritabanından filtrele
         sorgu = "SELECT id, plaka, dosya_adi, dosya_yolu FROM sigortalar WHERE plaka LIKE ?"
         kayitlar = pd.read_sql_query(sorgu, conn, params=("%" + arama_metni + "%",))
     else:
@@ -171,7 +193,7 @@ with sekmeler[1]:
                     )
                     sayac += 1
 
-                with open(dosya_yolu, "wb") as f:
+                with open(dosya_yolu, "wb5") as f:
                     f.write(pdf_dosya.getbuffer())
 
                 conn = veritabani_baglantisi()
